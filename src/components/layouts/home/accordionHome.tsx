@@ -14,14 +14,7 @@ const AccordionHome = () => {
             <AccordionTrigger>Is it styled?</AccordionTrigger>
             <AccordionContent>
               Yes. It comes with default styles that matches the other
-              components&apos; aesthetic.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger>Is it animated?</AccordionTrigger>
-            <AccordionContent>
-              Yes. It's animated by default, but you can disable it if you
-              prefer.
+              components aesthetic.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -36,7 +29,7 @@ const AccordionHome = () => {
             <AccordionTrigger>Is it styled?</AccordionTrigger>
             <AccordionContent>
               Yes. It comes with default styles that matches the other
-              components&apos; aesthetic.
+              components aesthetic.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
