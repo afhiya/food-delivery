@@ -5,38 +5,58 @@ const AccordionHome = () => {
       <div className="flex flex-row gap-5 p-8">
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
-            <AccordionTrigger>Is it accessible?</AccordionTrigger>
+            <AccordionTrigger>What is Zutto food?</AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              Zutto Food is a food delivery service that offers a wide variety
+              of meals from the best restaurants in your city.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger>Is it styled?</AccordionTrigger>
+            <AccordionTrigger>
+              How do I order food from Zutto Food?
+            </AccordionTrigger>
             <AccordionContent>
-              Yes. It comes with default styles that matches the other
-              components aesthetic.
+              To order food, you can visit the Zutto Food app from your browser,
+              create an account, and start browsing the various food options.
+              Select the food you want, add it to your cart, and make the
+              payment through the app.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>
+              What payment methods are accepted by Zutto Food?
+            </AccordionTrigger>
+            <AccordionContent>
+              Zutto Food accepts various payment methods, including credit
+              cards, debit cards, and digital payments such as with Qris.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
-            <AccordionTrigger>Is it accessible?</AccordionTrigger>
+            <AccordionTrigger>
+              Is there a delivery fee for Zutto Food?
+            </AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              Yes, Zutto Food charges a delivery fee that varies depending on
+              the delivery location and the restaurant you choose. Delivery fee
+              information will be displayed when you place your order.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger>Is it styled?</AccordionTrigger>
+            <AccordionTrigger>
+              What if there is an issue with my order?
+            </AccordionTrigger>
             <AccordionContent>
-              Yes. It comes with default styles that matches the other
-              components aesthetic.
+              If you experience any issues with your order, you can contact
+              Zutto Food customer service through our app or website. We will be
+              happy to assist you in resolving the issue
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
-            <AccordionTrigger>Is it animated?</AccordionTrigger>
+            <AccordionTrigger>Is Zutto Food available in all cities?</AccordionTrigger>
             <AccordionContent>
-              Yes. It's animated by default, but you can disable it if you
-              prefer.
+              Currently, Zutto Food is available in several major cities. We are continuously expanding our service coverage to serve more customers.
             </AccordionContent>
           </AccordionItem>
         </Accordion>

@@ -8,9 +8,7 @@ const Main = () => {
       <div className="font-bold flex justify-between items-center">
         <div>
           <h3 className="text-xs">Whats new?</h3>
-          <h1 className="text-md text-muted">
-            Pilih makananmu rasakan nikmatnya
-          </h1>
+          <h1 className="text-md text-muted">Choose our newest food!</h1>
         </div>
         <Button variant={"ghost"}>View More </Button>
       </div>
@@ -30,7 +28,6 @@ const Main = () => {
             <h3 className="text-sm">Rp. 10.000</h3>
           </div>
         </div>
-
       </div>
     </div>
   );

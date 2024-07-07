@@ -11,7 +11,7 @@ const FormLogin = () => {
         placeholder="Password"
         type="password"
       />
-      <p className="text-sm font-semibold text-center my-2">Atau</p>
+      <p className="text-sm font-semibold text-center my-5">Or</p>
       <div className="flex items-center justify-between gap-3 mb-3">
         <Button className="w-full">
           <svg
