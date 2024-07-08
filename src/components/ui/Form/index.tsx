@@ -16,14 +16,14 @@ const Form: React.FC<FormProps> = ({
 }) => {
   return (
     <>
-      <label className="text-lg font-bold mb-1 mt-2 " htmlFor={name}>
+      <label className="text-lg font-bold mb-1 mt-2" htmlFor={name}>
         {title}
       </label>
       <Input
         type={type}
         name={name}
         placeholder={placeholder}
-        className="p-2 text-sm"
+        className="p-2 text-sm mb-2"
       />
     </>
   );

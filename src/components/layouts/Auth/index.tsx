@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { Button } from "@/components/ui/button";
 
 interface AuthLayoutsProps {
   title: string;
@@ -17,9 +16,6 @@ const AuthLayouts: React.FC<AuthLayoutsProps> = ({ children, title }) => {
           </p>
         </div>
         {children}
-        <Button size="sm" variant="default" className="mt-3">
-          {title}
-        </Button>
       </div>
     </div>
   );
