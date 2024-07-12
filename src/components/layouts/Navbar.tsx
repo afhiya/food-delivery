@@ -1,11 +1,14 @@
-'use client'
+"use client";
 
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
-  const pathname = usePathname()
-
+  const { data } = useSession();
+  const pathname = usePathname();
+  console.log(data)
   const navlink: Array<any> = [
     {
       title: "Home",
@@ -21,14 +24,14 @@ const Navbar = () => {
     },
   ];
 
-  const disabled = ["auth","admin"]
+  const disabled = ["auth", "admin"];
 
-  const hideNavbar = disabled.includes(pathname.split("/")[1])
+  const hideNavbar = disabled.includes(pathname.split("/")[1]);
 
-  if(hideNavbar){
-    return null 
+  if (hideNavbar) {
+    return null;
   }
-  
+
   return (
     <div className="flex items-center justify-between px-24 py-7 w-full h-20 bg-secondary border-b-2 border-primary">
       <div className="flex flex-col items-center cursor-default">
@@ -61,12 +64,22 @@ const Navbar = () => {
           <circle cx="10.5" cy="19.5" r="1.5"></circle>
           <circle cx="17.5" cy="19.5" r="1.5"></circle>
         </svg>
-        <Link
-          className="px-7 py-3 bg-muted text-center font-bold text-secondary text-xs rounded-full"
-          href="/auth/register"
-        >
-          Join to Community
-        </Link>
+        {data ? 
+          <Button
+            className="px-7 py-3 bg-muted text-center font-bold text-secondary text-xs rounded-full"
+            type="button"
+            onClick={() => signOut()}
+          >
+            Log Out
+          </Button>
+         : 
+          <Link
+            className="px-7 py-3 bg-muted text-center font-bold text-secondary text-xs rounded-full"
+            href="/auth/register"
+          >
+            Join to Community
+          </Link>
+        }
       </div>
     </div>
   );

@@ -26,16 +26,14 @@ const FormRegister = () => {
     })
 
     const result = await response.json()
-    form.fullname.value = ""
-    form.email.value = ""
-    form.password.value = ""
+    form.reset();
     if(result.status === 200){
       setMessage(result.message)
       setLoading(false)
       setError(false)
       setTimeout(() => {
         router.push("/auth/login")
-      }, 2000);
+      }, 1000);
     } else {
       setError(true)
       setMessage(result.message)
@@ -48,7 +46,7 @@ const FormRegister = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2 className={`absolute top-10 text-sm font-semibold ${error ? "text-red-500" : "text-green-500"}`} >{message}</h2>
+      <h2 className={`absolute top-0 text-sm font-semibold ${error ? "text-red-500" : "text-green-500"}`} >{message}</h2>
       <Form
         title="Fullname"
         name="fullname"

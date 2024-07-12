@@ -8,7 +8,7 @@ interface AuthLayoutsProps {
 const AuthLayouts: React.FC<AuthLayoutsProps> = ({ children, title }) => {
   return (
     <div className="flex justify-center items-center h-svh">
-      <div className="flex sm:w-96 w-80 flex-col border-2 border-primary px-10 py-5">
+      <div className="flex sm:w-96 w-80 flex-col border-2 border-primary px-10 py-8 relative">
         <div className="text-primary mb-2">
           <h1 className="font-bold text-3xl">{title}</h1>
           <p className="text-sm font-semibold">
