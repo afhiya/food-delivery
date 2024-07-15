@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 const Navbar = () => {
   const { data } = useSession();
   const pathname = usePathname();
-  console.log(data)
+  
   const navlink: Array<any> = [
     {
       title: "Home",

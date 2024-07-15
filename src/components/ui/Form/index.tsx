@@ -4,7 +4,7 @@ import { Input } from "../input";
 interface FormProps {
   name: string;
   type: string;
-  placeholder: string;
+  placeholder?: string;
   title: string;
 }
 
@@ -23,7 +23,7 @@ const Form: React.FC<FormProps> = ({
         type={type}
         name={name}
         placeholder={placeholder}
-        className="p-2 text-sm mb-2"
+        className="p-2 text-sm mb-2 bg-primary/5"
       />
     </>
   );

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import Form from "../ui/Form";
 import { Button } from "../ui/button";
@@ -6,47 +6,55 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const FormRegister = () => {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [message, setMessage] = useState("")
-  const router = useRouter()
-  const handleSubmit = async (event:FormEvent) => {
-    event.preventDefault()
-    setLoading(true)
-    const form = event.target as HTMLFormElement
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    const form = event.target as HTMLFormElement;
     const data = {
-      name : form.fullname.value,
-      email : form.email.value,
-      password : form.password.value
-    }
+      name: form.fullname.value,
+      email: form.email.value,
+      password: form.password.value,
+    };
 
-    const response = await fetch("/api/user",{
-      method :"POST",
-      body : JSON.stringify(data)
-    })
+    const response = await fetch("/api/user", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
 
-    const result = await response.json()
-    form.reset();
-    if(result.status === 200){
-      setMessage(result.message)
-      setLoading(false)
-      setError(false)
+    const result = await response.json();
+
+    if (result.status === 200) {
+      setMessage(result.message);
+      setLoading(false);
+      setError(false);
+      form.reset();
       setTimeout(() => {
-        router.push("/auth/login")
+        router.push("/auth/login");
       }, 1000);
     } else {
-      setError(true)
-      setMessage(result.message)
-      setLoading(false)
+      setError(true);
+      setMessage(result.message);
+      setLoading(false);
+      form.reset();
       setTimeout(() => {
-        setMessage("")
-      },3000);
-    } 
-  }
+        setMessage("");
+      }, 3000);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2 className={`absolute top-0 text-sm font-semibold ${error ? "text-red-500" : "text-green-500"}`} >{message}</h2>
+      <h2
+        className={`absolute top-0 text-sm font-semibold ${
+          error ? "text-red-500" : "text-green-500"
+        }`}
+      >
+        {message}
+      </h2>
       <Form
         title="Fullname"
         name="fullname"

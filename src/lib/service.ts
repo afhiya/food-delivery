@@ -1,13 +1,18 @@
+import { supabase } from './supabase';
 import bcrypt  from 'bcrypt';
 import prisma from "./prisma"
-import { off } from 'process';
 
 type User = {
     name: string
     email: string
     password?: string 
-    image?: string
     role: string
+}
+
+type Product = {
+    name: string,
+    price: number,
+    image: File
 }
 
 export async function signUp(data: User) {
@@ -37,4 +42,41 @@ export async function signIn(email: string) {
     } else {
         return null
     }
+}
+
+export async function addProduct(dataReq: Product){
+    if(!dataReq.name || !dataReq.price || !dataReq.image.name){
+        return {status: 400, message:"Name, price and image cannot be empty"}
+    }
+    const product = await prisma.product.findFirst({where: {name: dataReq.name}})
+
+    if(product){
+        return {status: 400, message:"Product already exists"}
+    }
+
+    const imageUrl = await uploadImage(dataReq.image)
+    const data : any = {
+        name: dataReq.name,
+        price: dataReq.price,
+        image: imageUrl.path
+    }
+    const addProduct = await prisma.product.create({data})
+    if(!addProduct){
+        return {status: 400, message:"Product not created"}
+    } else {
+        return {status: 200, message:"Product successfully created"}
+    }
+}
+
+export async function uploadImage(file: File) {
+  const { data, error } = await supabase.storage
+    .from("image")
+    .upload(file.name, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
+     if (error) {
+       throw new Error(error.message);
+     }
+     return data
 }

@@ -19,7 +19,6 @@ model User {
   name      String
   email     String
   password  String?
-  image     String?
   role      String
 
   @@unique([email])
@@ -27,8 +26,7 @@ model User {
 
 model Product {
   id          Int @id @default(autoincrement())
-  name        String
-  description String
+  name        String  
   image       String
   price       Int
 }

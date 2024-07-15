@@ -4,7 +4,6 @@ type User = {
   name: string;
   email: string;
   password: string;
-  image?: string;
   role: string;
 };
 
@@ -15,7 +14,6 @@ export async function POST(req: Request) {
         name,
         email,
         password,
-        image : "",
         role : "user"
     }
     const addUser = await signUp(data)

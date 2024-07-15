@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import { signIn } from "@/lib/service";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -41,7 +41,6 @@ const authOptions: NextAuthOptions = {
         if (account?.provider === "credentials" && user) {
           token.name = user.name;
           token.email = user.email;
-          token.image = user.image;
           token.role = user.role;
         }
         return token;
@@ -49,7 +48,6 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }: any) {
         if ("name" in token) session.user.name = token.name;
         if ("email" in token) session.user.email = token.email;
-        if ("image" in token) session.user.image = token.image;
         if ("role" in token) session.user.role = token.role;
         return session;
     },

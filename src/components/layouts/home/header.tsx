@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <div className="w-full h-auto gap-5 bg-accent flex sm:flex-row flex-col justify-center items-center  p-12">
       <div className="">
-        <h1 className="text-4xl font-bold">Find your favorite food here!</h1>
+        <h1 className="text-5xl font-bold">Find your favorite food here!</h1>
         <p className="text-lg font-semibold py-5">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
           iusto sunt ad facere sapiente obcaecati, odio aperiam dolorem deserunt
