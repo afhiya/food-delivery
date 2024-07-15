@@ -67,7 +67,7 @@ const AddProductView = () => {
             />
           </div>
           <div className="mb-4">
-            <Form name="price" type="text" title="Product Price" />
+            <Form name="price" type="number" title="Product Price" />
           </div>
           <div className="mb-4">
             <Form name="image" type="file" title="Product Image" />

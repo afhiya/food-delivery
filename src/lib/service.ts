@@ -53,7 +53,12 @@ export async function addProduct(dataReq: Product){
     if(product){
         return {status: 400, message:"Product already exists"}
     }
-
+    if(dataReq.image.type !== "image/png"){
+        return {
+          status: 400,
+          message: "Invalid image format,Files must be of type PNG",
+        };
+    }
     const imageUrl = await uploadImage(dataReq.image)
     const data : any = {
         name: dataReq.name,
