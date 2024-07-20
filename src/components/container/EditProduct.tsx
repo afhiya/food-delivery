@@ -12,10 +12,14 @@ import {
 import Form from "../ui/Form";
 import { FormEvent } from "react";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
-const EditProduct = ({ id }: { id: number }) => {
-    const router = useRouter()
+const EditProduct = ({
+    id,
+    onTriger,
+}: {
+    id: number;
+    onTriger: () => void;
+}) => {
     const handleReplaceProduct = async (event: FormEvent) => {
         event.preventDefault;
         event.preventDefault();
@@ -40,6 +44,7 @@ const EditProduct = ({ id }: { id: number }) => {
                     progress: undefined,
                     theme: "dark",
                 });
+                onTriger()
             } else {
                 toast.error(`${dataUpdate.message}`, {
                     position: "bottom-center",
@@ -54,10 +59,6 @@ const EditProduct = ({ id }: { id: number }) => {
             }
         } catch (error) {
             console.log("Error", error);
-        } finally{
-            setTimeout(() => {
-                router.refresh();
-            }, 4000);
         }
     };
 

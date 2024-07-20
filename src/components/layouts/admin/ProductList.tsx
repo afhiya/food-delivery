@@ -11,7 +11,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type Product = {
     id: number;
@@ -37,6 +37,10 @@ const ProductListView = () => {
         }
     };
 
+    const handleTrigger = useCallback(() => {
+        getData();
+    }, []);
+
     useEffect(() => {
         getData();
     }, []);
@@ -61,12 +65,16 @@ const ProductListView = () => {
                             <TableCell>{product.name}</TableCell>
                             <TableCell>{product.price}</TableCell>
                             <TableCell className="text-center">
-                                <EditProduct id={product.id} />
+                                <EditProduct
+                                    id={product.id}
+                                    onTriger={handleTrigger}
+                                />
                             </TableCell>
                             <TableCell className="text-center">
                                 <ButtonDelete
                                     id={product.id}
                                     link="/api/product"
+                                    onTriger={handleTrigger}
                                 />
                             </TableCell>
                         </TableRow>

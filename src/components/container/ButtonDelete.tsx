@@ -1,13 +1,12 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
-const ButtonDelete = ({ id, link }: {
+const ButtonDelete = ({ id, link, onTriger }: {
     id: number,
-    link : string
+    link : string,
+    onTriger: () => void
 }) => {
-    const router = useRouter();
     const handleDelete = async (event: any) => {
         event.preventDefault();
         const data = { id };
@@ -27,7 +26,8 @@ const ButtonDelete = ({ id, link }: {
                     draggable: true,
                     progress: undefined,
                     theme: "dark",
-                });
+                })
+                onTriger()
             } else {
                 toast.error(`${dataDelete.message}`, {
                     position: "bottom-center",
@@ -42,10 +42,6 @@ const ButtonDelete = ({ id, link }: {
             }
         } catch (error) {
             console.log("error", error);
-        } finally{
-            setTimeout(() => {
-                router.refresh();
-            }, 4000);
         }
     };
 
