@@ -6,83 +6,88 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const FormRegister = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [message, setMessage] = useState("");
-  const router = useRouter();
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    setLoading(true);
-    const form = event.target as HTMLFormElement;
-    const data = {
-      name: form.fullname.value,
-      email: form.email.value,
-      password: form.password.value,
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [message, setMessage] = useState("");
+    const router = useRouter();
+    const handleSubmit = async (event: FormEvent) => {
+        event.preventDefault();
+        setLoading(true);
+        const form = event.target as HTMLFormElement;
+        const data = {
+            name: form.fullname.value,
+            email: form.email.value,
+            password: form.password.value,
+        };
+        try {
+            const response = await fetch("/api/user", {
+                method: "POST",
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            if (result.status === 200) {
+                setMessage(result.message);
+                setError(false);
+                setTimeout(() => {
+                    router.push("/auth/login");
+                }, 1000);
+            } else {
+                setError(true);
+                setMessage(result.message);
+                setTimeout(() => {
+                    setMessage("");
+                }, 3000);
+            }
+        } catch (error) {
+            console.log("error", error);
+        } finally {
+            setLoading(false);
+            form.reset();
+        }
     };
 
-    const response = await fetch("/api/user", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    return (
+        <form onSubmit={handleSubmit}>
+            <h2
+                className={`absolute top-0 text-sm font-semibold ${
+                    error ? "text-red-500" : "text-green-500"
+                }`}
+            >
+                {message}
+            </h2>
+            <Form
+                title="Fullname"
+                name="fullname"
+                placeholder="Fullname"
+                type="text"
+            />
+            <Form title="Email" name="email" placeholder="Email" type="email" />
+            <Form
+                title="Password"
+                name="password"
+                placeholder="Password"
+                type="password"
+            />
+            <p className="text-sm font-semibold text-center mt-2">
+                Have account?{" "}
+                <Link
+                    href="/auth/login"
+                    className="underline text-primary hover:text-muted transition-all"
+                >
+                    Login here
+                </Link>
+            </p>
 
-    const result = await response.json();
-
-    if (result.status === 200) {
-      setMessage(result.message);
-      setLoading(false);
-      setError(false);
-      form.reset();
-      setTimeout(() => {
-        router.push("/auth/login");
-      }, 1000);
-    } else {
-      setError(true);
-      setMessage(result.message);
-      setLoading(false);
-      form.reset();
-      setTimeout(() => {
-        setMessage("");
-      }, 3000);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2
-        className={`absolute top-0 text-sm font-semibold ${
-          error ? "text-red-500" : "text-green-500"
-        }`}
-      >
-        {message}
-      </h2>
-      <Form
-        title="Fullname"
-        name="fullname"
-        placeholder="Fullname"
-        type="text"
-      />
-      <Form title="Email" name="email" placeholder="Email" type="email" />
-      <Form
-        title="Password"
-        name="password"
-        placeholder="Password"
-        type="password"
-      />
-      <p className="text-sm font-semibold text-center mt-2">
-        Have account?{" "}
-        <Link
-          href="/auth/login"
-          className="underline text-primary hover:text-muted transition-all"
-        >
-          Login here
-        </Link>
-      </p>
-
-      <Button size="sm" variant="default" className="mt-3 w-full" type="submit">
-        {loading ? "Loading..." : "Register"}
-      </Button>
-    </form>
-  );
+            <Button
+                size="sm"
+                variant="default"
+                className="mt-3 w-full"
+                type="submit"
+            >
+                {loading ? "Loading..." : "Register"}
+            </Button>
+        </form>
+    );
 };
 
 export default FormRegister;

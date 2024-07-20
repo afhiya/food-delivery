@@ -7,62 +7,65 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const FormLogin = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setLoading(true);
-    const form = event.target as HTMLFormElement;
-    const email = form.email.value;
-    const password = form.password.value;
-    const login = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-      callbackUrl: "/",
-    });
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setLoading(true);
+        const form = event.target as HTMLFormElement;
+        const email = form.email.value;
+        const password = form.password.value;
+        try {
+            const login = await signIn("credentials", {
+                redirect: false,
+                email,
+                password,
+                callbackUrl: "/",
+            });
 
-    if (!login?.error) {
-      setLoading(false);
-      form.reset();
-      setError(null);
-      router.push("/");
-    } else {
-      setLoading(false);
-      form.reset();
-      setError("Wrong email or password");
-      setTimeout(() => {
-        setError("");
-      }, 2000);
-    }
-  };
+            if (!login?.error) {
+                setError(null);
+                router.push("/");
+            } else {
+                setError("Wrong email or password");
+                setTimeout(() => {
+                    setError("");
+                }, 2000);
+            }
+        } catch (error) {
+            console.log("error", error);
+        } finally {
+            setLoading(false);
+            form.reset();
+        }
+    };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {error && (
-        <h2 className="absolute top-0 text-sm font-semibold text-red-500">
-          {error}
-        </h2>
-      )}
-        <Form title="Email" name="email" placeholder="Email" type="email" />
-        <Form
-          title="Password"
-          name="password"
-          placeholder="Password"
-          type="password"
-        />
-        <Button
-          size="sm"
-          variant="default"
-          className="mt-3 w-full"
-          type="submit"
-        >
-          {loading ? "Loading..." : "Login"}
-        </Button>
-    </form>
-  );
+    return (
+        <form onSubmit={handleSubmit}>
+            {error && (
+                <h2 className="absolute top-0 text-sm font-semibold text-red-500">
+                    {error}
+                </h2>
+            )}
+            <Form title="Email" name="email" placeholder="Email" type="email" />
+            <Form
+                title="Password"
+                name="password"
+                placeholder="Password"
+                type="password"
+            />
+            <Button
+                size="sm"
+                variant="default"
+                className="mt-3 w-full"
+                type="submit"
+            >
+                {loading ? "Loading..." : "Login"}
+            </Button>
+        </form>
+    );
 };
 
 export default FormLogin;

@@ -1,6 +1,7 @@
 import AdminSidebar from "@/components/layouts/Sidebar";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { ToastContainer } from "react-toastify";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600"] });
 
@@ -18,6 +19,7 @@ export default function AdminLayout({
   return( 
     <section className={`${poppins.className} flex`}>
         <AdminSidebar />
+        <ToastContainer />
         {children}
     </section>
   )
