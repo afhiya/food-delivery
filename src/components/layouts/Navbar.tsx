@@ -9,7 +9,10 @@ const Navbar = () => {
   const { data } = useSession();
   const pathname = usePathname();
   
-  const navlink: Array<any> = [
+  const navlink: Array<{
+    title: string
+    link: string
+  }> = [
     {
       title: "Home",
       link: "/",

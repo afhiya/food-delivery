@@ -29,4 +29,5 @@ model Product {
   name        String  
   image       String
   price       Int
+  category    String
 }

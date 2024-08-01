@@ -25,10 +25,9 @@ const EditProduct = ({
         event.preventDefault();
         const form = event.target as HTMLFormElement;
         const formData = new FormData(form);
-        formData.append("id", id.toString());
 
         try {
-            const response = await fetch("/api/product", {
+            const response = await fetch(`/api/product?id=${id}`, {
                 method: "PUT",
                 body: formData,
             });

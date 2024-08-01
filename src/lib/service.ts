@@ -47,15 +47,28 @@ type Product = {
     name: string;
     price: number;
     image: File;
+    category: string
 };
 
 export async function getProduct() {
     const product = await prisma.product.findMany();
-    return product;
+    const data = []
+
+    for(let i = 0; i < product.length; i++) {
+        const dataImage = await getImage(product[i].image)
+        data.push({
+            id: product[i].id,
+            name: product[i].name,
+            image: dataImage.publicUrl,
+            price: product[i].price,
+            category: product[i].category
+        })
+    }
+    return data;
 }
 
 export async function addProduct(dataReq: Product) {
-    if (!dataReq.name || !dataReq.price || !dataReq.image.name) {
+    if (!dataReq.name || !dataReq.price || !dataReq.image.name || !dataReq.category) {
         return {
             status: 400,
             message: "Name, price and image cannot be empty",
@@ -91,11 +104,13 @@ export async function addProduct(dataReq: Product) {
               name: string;
               price: number;
               image: string | undefined;
+              category : string;
           }
         | any = {
         name: dataReq.name,
         price: dataReq.price,
         image: dataImage?.path,
+        category: dataReq.category,
     };
     const addProduct = await prisma.product.create({ data });
     if (!addProduct) {
@@ -141,7 +156,7 @@ export async function updateProduct(req: {
     if (error) return { status: error?.statusCode, message: error?.message };
     const replaceProduct = await prisma.product.update({
         where: { id: id },
-        data: { name: name, price: price, image: dataImage?.path },
+        data: { name: name, price: price, image: dataImage?.path, },
     });
     if (!replaceProduct) {
         return { status: 400, message: "Product not updated" };
@@ -164,6 +179,15 @@ export async function deleteProduct(id: number) {
 }
 
 // Service Image Storage in Supabase
+
+export async function getImage(path:string) {
+    const { data } = await supabase.storage
+        .from("image")
+        .getPublicUrl(path);
+    
+    return data;
+}
+
 export async function uploadImage(file: File) {
     const { data, error } = await supabase.storage
         .from("image")

@@ -1,5 +1,6 @@
 "use client";
 
+import SelectComponent from "@/components/container/SelectComponent";
 import { Button } from "@/components/ui/button";
 import Form from "@/components/ui/Form";
 import { FormEvent, useState } from "react";
@@ -15,6 +16,7 @@ const AddProductView = () => {
         const formData = new FormData();
         formData.append("name", form.product.value);
         formData.append("price", form.price.value);
+        formData.append("category", form.category.value);
         formData.append("image", form.image.files[0]);
 
         try {
@@ -74,6 +76,9 @@ const AddProductView = () => {
                             type="number"
                             title="Product Price"
                         />
+                    </div>
+                    <div className="mb-4">
+                        <SelectComponent width="w-full" placeholder="Select Category" />
                     </div>
                     <div className="mb-4">
                         <Form name="image" type="file" title="Product Image" />
