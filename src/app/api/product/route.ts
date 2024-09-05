@@ -3,7 +3,7 @@ import {
     deleteProduct,
     getProduct,
     updateProduct,
-} from "@/lib/service";
+} from "@/services/Product";
 
 type Product = {
     name: string;

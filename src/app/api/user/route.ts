@@ -1,4 +1,4 @@
-import { signUp } from "@/lib/service"
+import { signUp } from "@/services/User";
 
 type User = {
   name: string;

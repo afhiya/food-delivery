@@ -3,7 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
-import Provider from "@/context/Provider";
+import ProviderSession from "@/context/Provider/session";
+import ProviderRedux from "@/context/Provider/redux";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={inter.className}>
-        <Provider>
-          <Navbar />
-          {children}
-          <Footer />
-        </Provider>
+        <ProviderSession>
+          <ProviderRedux>
+            <Navbar />
+            <ToastContainer />
+            {children}
+            <Footer />
+          </ProviderRedux>
+        </ProviderSession>
       </body>
     </html>
   );

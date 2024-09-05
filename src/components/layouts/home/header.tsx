@@ -12,7 +12,7 @@ const Header = () => {
               <p className="text-lg font-semibold py-5">
                   ZuttoFood is a leading platform for high-quality food
                   products. We prioritize customer satisfaction by offering a
-                  selection of innovative and delicious products.
+                  selection of innovative and delicious products. Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </p>
               <Button size={"xl"} className="mt-2">
                   <Link href="/menu">Show Menu</Link>

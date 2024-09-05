@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import ListProduct from "../../container/ListProduct";
 import Loading from "../../ui/loading";
+import ProductView from "@/components/container/ProductView";
 
 type Product = {
     id: number;
@@ -17,9 +18,7 @@ type Product = {
 
 const MenuView = () => {
     const [category, setCategory] = useState<string>("");
-    const [product, setProduct] = useState<{ data: Product[] }>();
     const [search, setSearch] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(true);
     const [value] = useDebounce(search, 500);
 
     const categories: Array<{
@@ -49,25 +48,6 @@ const MenuView = () => {
         },
     ];
 
-    const getData = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch(
-                `/api/product?keyword=${search}&&category=${category}`
-            );
-            const data = await response.json();
-            setProduct(data);
-        } catch (Err: any) {
-            throw new Error(Err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        getData();
-    }, [category, value]);
-
     return (
         <div className="w-full">
             <header className="relative w-auto h-72 my-6 mx-8 overflow-hidden rounded-lg shadow-lg bg-muted">
@@ -82,7 +62,7 @@ const MenuView = () => {
                 />
                 {search && (
                     <Cross1Icon
-                        className="w-6 h-6 text-primary/80 absolute top-[103px] right-72 cursor-pointer z-20"
+                        className="w-6 h-6 text-primary/80 absolute top-[103px] right-80 cursor-pointer z-20"
                         onClick={() => setSearch("")}
                     />
                 )}
@@ -90,7 +70,7 @@ const MenuView = () => {
                     {categories.map((item) => {
                         return (
                             <h2
-                                className={`text-md font-medium py-1 px-4 selection:bg-none ${
+                                className={`w-auto text-md font-medium py-1 px-4 selection:bg-none ${
                                     category === item.value
                                         ? "text-secondary bg-primary/90 rounded-full transition-all"
                                         : "text-primary"
@@ -98,18 +78,14 @@ const MenuView = () => {
                                 key={item.value}
                                 onClick={() => setCategory(item.value)}
                             >
-                                {item.title}
+                                {item.icon} {item.title}
                             </h2>
                         );
                     })}
                 </div>
             </header>
             <section className="w-auto my-6 mx-8 py-4 px-8 bg-primary/80 rounded-md">
-                {loading ? (
-                    <Loading />
-                ) : (
-                    <ListProduct api={product} />
-                )}
+                <ProductView category={category} keyword={value} />
             </section>
         </div>
     );

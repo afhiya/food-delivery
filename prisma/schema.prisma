@@ -15,19 +15,44 @@ datasource db {
 }
 
 model User {
-  id        Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
-  email     String
+  email     String   @unique
   password  String?
   role      String
-
-  @@unique([email])
+  carts     Cart[]   // Relasi satu ke banyak dengan Cart
+  transaction Transaction[]
 }
 
 model Product {
-  id          Int @id @default(autoincrement())
-  name        String  
-  image       String
-  price       Int
-  category    String
+  id        Int      @id @default(autoincrement())
+  name      String
+  image     String
+  price     Int
+  category  String
+  carts     Cart[]   // Relasi satu ke banyak dengan Cart
 }
+
+model Cart {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  user        User        @relation(fields: [userId], references: [id])
+  productId   Int
+  product     Product     @relation(fields: [productId], references: [id])
+  quantity    Int
+  transaction Transaction[]
+}
+
+model Transaction {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  cardId      Int
+  card        Cart      @relation(fields: [cardId], references: [id])
+  totalAmount Int       // Total harga dari transaksi
+  status      String
+  message     String?
+  comment     String?
+  createdAt   DateTime  @default(now())
+}
+

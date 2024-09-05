@@ -7,7 +7,7 @@ interface AuthSession {
     children: ReactNode
 }
 
-const Provider:React.FC<AuthSession> = ({ children}) => {
+const ProviderSession:React.FC<AuthSession> = ({ children}) => {
     return(
         <SessionProvider>
             {children}
@@ -15,4 +15,4 @@ const Provider:React.FC<AuthSession> = ({ children}) => {
     )
 }
 
-export default Provider
+export default ProviderSession

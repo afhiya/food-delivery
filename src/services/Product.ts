@@ -1,74 +1,54 @@
-import { supabase } from "./supabase";
-import bcrypt from "bcrypt";
-import prisma from "./prisma";
+import { supabase } from "../lib/supabase";
+import prisma from "../lib/prisma";
 
-// Service User
-type User = {
-    name: string;
-    email: string;
-    password?: string;
-    role: string;
-};
-
-export async function signUp(data: User) {
-    if (!data.email || !data.password || !data.name) {
-        return {
-            status: 400,
-            message: "Name, email and password cannot be empty",
-        };
-    }
-    const user = await prisma.user.findUnique({ where: { email: data.email } });
-    if (user) {
-        return { status: 400, message: "Account already exists" };
-    }
-    if (data.password.length < 8) {
-        return { status: 400, message: "Password less than 8 characters" };
-    }
-    data.password = await bcrypt.hash(data.password, 10);
-    const addUser = await prisma.user.create({ data });
-    if (!addUser) {
-        return { status: 400, message: "Account not created" };
-    } else {
-        return { status: 200, message: "Account successfully created" };
-    }
-}
-
-export async function signIn(email: string) {
-    const data = await prisma.user.findUnique({ where: { email: email } });
-    if (data) {
-        return data;
-    } else {
-        return null;
-    }
-}
-
-// Service Product
 type Product = {
     name: string;
     price: number;
     image: File;
-    category: string
+    category: string;
 };
 
 export async function getProduct() {
     const product = await prisma.product.findMany();
-    const data = []
+    const data = [];
 
-    for(let i = 0; i < product.length; i++) {
-        const dataImage = await getImage(product[i].image)
+    for (let i = 0; i < product.length; i++) {
+        const dataImage = await getImage(product[i].image);
         data.push({
             id: product[i].id,
             name: product[i].name,
             image: dataImage.publicUrl,
             price: product[i].price,
-            category: product[i].category
-        })
+            category: product[i].category,
+        });
     }
     return data;
 }
 
+export async function getProductbyId(id: number){
+    const product = await prisma.product.findUnique({
+        where: { id : id}
+    });
+
+    const image = await getImage(product?.image as string);
+    const data = {
+        id: product?.id,
+        name: product?.name,
+        image: image.publicUrl,
+        price: product?.price,
+        category: product?.category
+    }
+
+    return data
+}
+
 export async function addProduct(dataReq: Product) {
-    if (!dataReq.name || !dataReq.price || !dataReq.image.name || !dataReq.category) {
+    if (
+        !dataReq.name ||
+        !dataReq.price ||
+        !dataReq.image.name ||
+        !dataReq.category
+    ) {
         return {
             status: 400,
             message: "Name, price and image cannot be empty",
@@ -104,7 +84,7 @@ export async function addProduct(dataReq: Product) {
               name: string;
               price: number;
               image: string | undefined;
-              category : string;
+              category: string;
           }
         | any = {
         name: dataReq.name,
@@ -133,15 +113,15 @@ export async function updateProduct(req: {
             message: "Name, price and image cannot be empty",
         };
     }
-    if(image.type !== 'image/png'){
+    if (image.type !== "image/png") {
         return {
             status: 400,
             message: "Invalid image format,Files must be of type PNG",
         };
     }
-    const findData = await prisma.product.findUnique({where: {id: id}})
+    const findData = await prisma.product.findUnique({ where: { id: id } });
 
-    await deleteImage(findData?.image)
+    await deleteImage(findData?.image);
     const {
         dataImage,
         error,
@@ -156,7 +136,7 @@ export async function updateProduct(req: {
     if (error) return { status: error?.statusCode, message: error?.message };
     const replaceProduct = await prisma.product.update({
         where: { id: id },
-        data: { name: name, price: price, image: dataImage?.path, },
+        data: { name: name, price: price, image: dataImage?.path },
     });
     if (!replaceProduct) {
         return { status: 400, message: "Product not updated" };
@@ -180,11 +160,9 @@ export async function deleteProduct(id: number) {
 
 // Service Image Storage in Supabase
 
-export async function getImage(path:string) {
-    const { data } = await supabase.storage
-        .from("image")
-        .getPublicUrl(path);
-    
+export async function getImage(path: string) {
+    const { data } = await supabase.storage.from("image").getPublicUrl(path);
+
     return data;
 }
 
