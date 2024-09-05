@@ -16,8 +16,6 @@ import { addSliceCart, getSliceCart, updateSliceCart } from "@/hooks/redux/Slice
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 
-
-
 const AddToCart = ({
   items,
 }: {
@@ -40,7 +38,7 @@ const AddToCart = ({
       productId: items?.id,
       quantity: value,
     };
-    const cart = state?.data.find((item) => item.productId === items.id);
+    const cart = state?.data.find((item) => item.productId == items.id);
   
     if (cart) {
       const newData = {

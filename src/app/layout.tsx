@@ -5,7 +5,7 @@ import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
 import ProviderSession from "@/context/Provider/session";
 import ProviderRedux from "@/context/Provider/redux";
-import { ToastContainer } from "react-toastify";
+import ToastProvider from "@/context/Provider/toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +26,7 @@ export default function RootLayout({
         <ProviderSession>
           <ProviderRedux>
             <Navbar />
-            <ToastContainer />
-            {children}
+            <ToastProvider>{children}</ToastProvider>
             <Footer />
           </ProviderRedux>
         </ProviderSession>

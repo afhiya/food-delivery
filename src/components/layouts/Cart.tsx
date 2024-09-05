@@ -106,10 +106,10 @@ const CartView = ({ open, data }: { open: boolean; data: any }) => {
     <div
       className={`${
         open ? "block" : "hidden"
-      } w-[300px] h-auto bg-secondary py-2 px-4 absolute -right-28 border border-primary`}
+      } w-[350px] h-auto bg-secondary py-2 px-4 absolute overflow-hidden -right-28 border border-primary`}
     >
       <h1 className="font-bold text-xl text-center">My Cart</h1>
-      <div className="flex flex-col">
+      <div className="flex flex-col h-[400px] overflow-y-auto">
         {data.length <= 0 ? (
           <h1 className="text-center font-medium text-base">
             Not Found Product
@@ -164,7 +164,7 @@ const CartView = ({ open, data }: { open: boolean; data: any }) => {
                     </div>
                   </div>
                   <button
-                    className="bg-muted text-secondary p-2 rounded-xl absolute top-1 -right-5"
+                    className="bg-muted text-secondary p-2 rounded-xl absolute top-1 right-0"
                     onClick={() => handleDeleteCart(item)}
                   >
                     <TrashIcon className="h-4 w-4" />
